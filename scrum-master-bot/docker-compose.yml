@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/standups:/app/standups
+    environment:
+      - OLLAMA_HOST=host.docker.internal
+    networks:
+      - scrum-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - scrum-network
+
+networks:
+  scrum-network:
+    driver: bridge 

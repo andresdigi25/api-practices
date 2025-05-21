@@ -1,0 +1,88 @@
+{
+    "models": {
+        "Producto": {
+            "nombre": "str",
+            "precio": "float",
+            "stock": "int"
+        },
+        "Cliente": {
+            "nombre": "str",
+            "email": "str",
+            "edad": "int"
+        }
+    },
+    "routes": [
+        {
+            "path": "/productos",
+            "method": "POST",
+            "body_model": "Producto",
+            "response_model": "Producto"
+        },
+        {
+            "path": "/productos",
+            "method": "GET",
+            "response_model": "Producto"
+        },
+        {
+            "path": "/clientes",
+            "method": "POST",
+            "body_model": "Cliente",
+            "response_model": "Cliente"
+        },
+        {
+            "path": "/clientes",
+            "method": "GET",
+            "response_model": "Cliente"
+        }
+    ]
+}
+
+
+
+{
+    "models": {
+        "Cliente": {
+            "nombre": "str",
+            "email": "str",
+            "edad": "int"
+        }
+    },
+    "routes": [
+        {
+            "path": "/clientes",
+            "method": "POST",
+            "body_model": "Cliente",
+            "response_model": "Cliente"
+        },
+        {
+            "path": "/clientes",
+            "method": "GET",
+            "response_model": "Cliente"
+        }
+    ]
+}
+
+
+{
+    "models": {
+        "Service": {
+            "nombre": "str",
+            "email": "str",
+            "edad": "int"
+        }
+    },
+    "routes": [
+        {
+            "path": "/services",
+            "method": "POST",
+            "body_model": "Service",
+            "response_model": "Service"
+        },
+        {
+            "path": "/services",
+            "method": "GET",
+            "response_model": "Service"
+        }
+    ]
+}
+
