@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, request
-import asyncio
 import time
-from asgiref.sync import async_to_sync
 
 app = Flask(__name__)
 
@@ -32,26 +30,24 @@ def get_params():
         'status': 'success'
     })
 
-# New async endpoints using async_to_sync
+# New async endpoints without async/await
 @app.route('/api/async/hello', methods=['GET'])
-@async_to_sync
-async def async_hello():
-    # Simulate some async operation
-    await asyncio.sleep(1)
+def async_hello():
+    # Simulate some operation
+    time.sleep(1)
     return jsonify({
         'message': 'Hello from async Flask with Gunicorn!',
         'status': 'success'
     })
 
 @app.route('/api/async/delayed', methods=['GET'])
-@async_to_sync
-async def async_delayed():
+def async_delayed():
     delay = int(request.args.get('delay', '2'))
     start_time = time.time()
     
-    # Simulate multiple async operations
-    await asyncio.sleep(delay)
-    await asyncio.sleep(1)  # Additional async operation
+    # Simulate multiple operations
+    time.sleep(delay)
+    time.sleep(1)  # Additional operation
     
     end_time = time.time()
     return jsonify({
@@ -61,20 +57,17 @@ async def async_delayed():
     })
 
 @app.route('/api/async/parallel', methods=['GET'])
-@async_to_sync
-async def async_parallel():
-    async def mock_task(delay):
-        await asyncio.sleep(delay)
+def async_parallel():
+    def mock_task(delay):
+        time.sleep(delay)
         return f'Task completed in {delay} seconds'
 
-    # Run multiple async tasks in parallel
-    tasks = [
+    # Run multiple tasks sequentially (simulate parallel)
+    results = [
         mock_task(1),
         mock_task(2),
         mock_task(3)
     ]
-    
-    results = await asyncio.gather(*tasks)
     
     return jsonify({
         'results': results,
@@ -82,4 +75,4 @@ async def async_parallel():
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000) 
+    app.run(host='0.0.0.0', port=5000)
